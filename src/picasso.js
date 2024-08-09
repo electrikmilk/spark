@@ -2,6 +2,8 @@
 Picasso HTML5 Canvas Abstraction
 */
 
+import {nextFrame} from './util.js';
+
 export class Picasso {
     element;
     ctx;
@@ -119,8 +121,4 @@ export class Picasso {
     textWidth(text) {
         return this.ctx.measureText(text).width;
     }
-}
-
-export async function nextFrame() {
-    await new Promise(resolve => setTimeout(resolve));
 }
