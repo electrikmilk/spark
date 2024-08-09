@@ -2,8 +2,6 @@
  * Render framework.
  */
 
-import './main.css';
-
 export * from './html.js';
 export * from './store.js';
 export * from './component.js';
