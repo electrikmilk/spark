@@ -1,0 +1,18 @@
+<br/>
+<img height="100" width="100" src="https://i.imgur.com/rTGqAIO.png" title="Spark" alt="SparkJS Lightning Bolt Logo"/>
+
+# Spark
+
+Spark is a minimal web library.
+
+## Features
+
+- Randomness
+- Reactive stores for data, media queries and data returned from HTTP requests like a JSON API
+- Canvas abstraction
+- Global references
+- Element rendering abstraction
+- Element animations
+- 3rd party resource management
+- Utility functions
+- Live URL params management
