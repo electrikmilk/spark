@@ -26,10 +26,10 @@ export class Picasso {
         if (!options.ratio) {
             const devicePixelRatio = window.devicePixelRatio || 1;
             const backingStorePixelRatio = this.ctx.webkitBackingStorePixelRatio ||
-                this.ctx.mozBackingStorePixelRatio ||
-                this.ctx.msBackingStorePixelRatio ||
-                this.ctx.oBackingStorePixelRatio ||
-                this.ctx.backingStorePixelRatio || 1;
+                    this.ctx.mozBackingStorePixelRatio ||
+                    this.ctx.msBackingStorePixelRatio ||
+                    this.ctx.oBackingStorePixelRatio ||
+                    this.ctx.backingStorePixelRatio || 1;
 
             this.ratio = devicePixelRatio / backingStorePixelRatio;
         } else {
