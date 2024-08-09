@@ -4,8 +4,8 @@
 
 export * from './html.js';
 export * from './store.js';
-export * from './component.js';
 export * from './resources.js';
+export * from './url.js';
 export * from './random.js';
 export * from './picasso.js';
 export * from './refs.js';
