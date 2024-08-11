@@ -2,7 +2,6 @@
  * HTML & DOM functions.
  */
 
-import {autoModel} from './store.js';
 import {Animate} from './animate.js';
 
 const inputTypes = ['text', 'search', 'url', 'number', 'password', 'email', 'tel'];
@@ -17,11 +16,6 @@ export function element(...elements) {
             if (config['tag']) {
                 tag = config['tag'];
                 delete config['tag'];
-            }
-            if (config['model']) {
-                const model = config['model'];
-                delete config['model'];
-                return autoModel(model, {tag: tag, ...config});
             }
         }
 
