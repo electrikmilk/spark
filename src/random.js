@@ -14,14 +14,9 @@ export class RNG {
         this.max = max;
     }
 
+    // Returns a new random value.
     new() {
         return this.value = randomInt(this.min, this.max);
-    }
-
-    maybeNeg() {
-        if (maybe()) {
-            this.value = -this.new();
-        }
     }
 }
 
@@ -32,13 +27,26 @@ export function maybe() {
 
 // Returns a random value from the values given.
 export function randomValue(...values) {
-    return values[randomInt(0, values.length)];
+    return values[randomInt(0, values.length - 1)];
+}
+
+// Generates a random ID with an optional prefix and length.
+export function randomID(prefix = 'id-', length = 6) {
+    let identifier = prefix;
+    for (let i = 0; i < length; i++) {
+        const range = randomValue(
+                [65, 90], // UPPERCASE
+                [97, 122], // lowercase
+                [48, 57], // 0-9
+        );
+
+        identifier += String.fromCharCode(randomInt(range[0], range[1]));
+    }
+
+    return identifier;
 }
 
 // Generate a random number.
 export function randomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
