@@ -7,9 +7,9 @@ import {nextFrame, sleep} from './util.js';
 const CUBIC_BEZIER_EASING = 'cubic-bezier(0.42, 0, 0.58, 1)';
 
 export class Scene {
-    actors;
+    actors = [];
 
-    constructor(actors) {
+    constructor(...actors) {
         this.actors = actors;
     }
 
