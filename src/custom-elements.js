@@ -2,34 +2,6 @@
  * Custom elements abstraction.
  */
 
-class URLAttribute extends CustomElementAttribute {
-
-}
-
-export class ZLink extends CustomElement {
-    static observedAttributes = ['url'];
-
-    constructor() {
-        super('z-link');
-
-        this.registerAttribute('url', new URLAttribute);
-    }
-
-    connectedCallback() {
-        this.onclick = () => {
-            const urlAttribute = this.attribute('url');
-            if (urlAttribute) {
-                window.open(urlAttribute.value, '_self');
-            }
-        };
-    }
-}
-
-
-defineElements({
-    'z-link': ZLink,
-});
-
 export class CustomElement extends HTMLElement {
     name;
     attributes = {};
