@@ -18,14 +18,7 @@ export class ResourceManager {
     }
 
     load() {
-        let resources = this.resources;
-        const jsWorkerResources = this.resources.filter(r => r instanceof JavaScriptWorkerResource);
-        if (jsWorkerResources.length > 1) {
-            resources = this.resources.filter(r => !r instanceof JavaScriptWorkerResource);
-            importWorker(jsWorkerResources.map(jsw => jsw.src));
-        }
-
-        resources.forEach(r => r.load());
+        this.resources.forEach(r => r.load());
     }
 }
 
@@ -105,27 +98,6 @@ export class JavaScriptResource extends Resource {
     }
 }
 
-export class JavaScriptWorkerResource extends Resource {
-    fallbackResource;
-
-    constructor(src) {
-        super(src);
-
-        if (!window.Worker) {
-            this.fallbackResource = new JavaScriptResource(this.src);
-        }
-    }
-
-    load() {
-        if (this.fallbackResource) {
-            this.fallbackResource.load();
-            return;
-        }
-
-        importWorker(this.versionedSrc());
-    }
-}
-
 export class GoogleFontResource extends Resource {
     name;
     weights = [];
@@ -188,15 +160,4 @@ function elementHasAttributes(element, attrs) {
     }
 
     return true;
-}
-
-function importWorker(...srcs) {
-    const worker = new Worker(new URL('./workers/importScripts.js', import.meta.url), {
-        type: 'classic',
-    });
-
-    worker.postMessage({srcs: [...srcs]});
-    worker.onmessage = () => {
-        worker.terminate();
-    };
 }
