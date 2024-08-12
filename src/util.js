@@ -56,7 +56,7 @@ export function deepCompare(value1, value2) {
 }
 
 // Reconstructs object with keys sorted consistently.
-export function sortObj(obj, compareFn = null) {
+export function sortObj(obj, compareFn = undefined) {
     let newObj = {};
     for (let item in Object.keys(obj).sort(compareFn)) {
         if (typeof obj[item] === 'object') {
