@@ -32,7 +32,12 @@ export function randomValue(...values) {
 
 // Generates a random ID with an optional prefix and length.
 export function randomID(prefix = 'id-', length = 6) {
-    let identifier = prefix;
+    return prefix + hash(length);
+}
+
+// Generates a random alphanumeric hash.
+export function hash(length = 6) {
+    let randomStr = '';
     for (let i = 0; i < length; i++) {
         const range = randomValue(
                 [65, 90], // UPPERCASE
@@ -40,10 +45,10 @@ export function randomID(prefix = 'id-', length = 6) {
                 [48, 57], // 0-9
         );
 
-        identifier += String.fromCharCode(randomInt(range[0], range[1]));
+        randomStr += String.fromCharCode(randomInt(range[0], range[1]));
     }
 
-    return identifier;
+    return randomStr;
 }
 
 // Generate a random number.
