@@ -44,17 +44,29 @@ export function arrayDiff(arr1, arr2) {
 
 // Deep compare two objects.
 export function deepCompare(value1, value2) {
-    if (value1 === {} && value2 === {}) {
-        return true;
-    }
+    if (typeof value1 === 'object' || typeof value2 === 'object') {
+        if (Object.is(value1, {}) && Object.is(value2, {})) {
+            return true;
+        }
 
-    const type1 = typeof value1;
-    const type2 = typeof value2;
-    if (type1 === 'object' || type2 === 'object') {
-        return JSON.stringify(value1) === JSON.stringify(value2);
+        return JSON.stringify(sortObj(value1)) === JSON.stringify(sortObj(value2));
     }
 
     return false;
+}
+
+// Reconstructs object with keys sorted consistently.
+export function sortObj(obj, compareFn = null) {
+    let newObj = {};
+    for (let item in Object.keys(obj).sort(compareFn)) {
+        if (typeof obj[item] === 'object') {
+            newObj[item] = sortObj(obj[item]);
+            continue;
+        }
+        newObj[item] = obj[item];
+    }
+
+    return newObj;
 }
 
 // Wait until the next frame.
