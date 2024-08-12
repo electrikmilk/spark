@@ -44,6 +44,10 @@ export function arrayDiff(arr1, arr2) {
 
 // Deep compare two objects.
 export function deepCompare(value1, value2) {
+    if (value1 === {} && value2 === {}) {
+        return true;
+    }
+
     const type1 = typeof value1;
     const type2 = typeof value2;
     if (type1 === 'object' || type2 === 'object') {
