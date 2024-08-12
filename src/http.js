@@ -24,17 +24,17 @@ export class APIModel {
     config = {headers: new Headers({'Content-Type': 'application/json'})};
     loadParam = 'id';
 
-    async constructor(init = null, config = {}) {
-        if (init) {
-            if (typeof init == 'object') {
-                return await this.create(init);
-            } else {
-                return await this.load(init);
-            }
-        }
-
+    constructor(init = null, config = {}) {
         if (config !== {}) {
             this.config = {...this.config, ...config};
+        }
+
+        if (init) {
+            if (typeof init == 'object') {
+                this.create(init);
+            } else {
+                this.load(init);
+            }
         }
     }
 
@@ -186,10 +186,10 @@ export class APIStore extends Store {
     url;
     busy;
 
-    async constructor(url) {
+    constructor(url) {
         super();
         this.url = url;
-        await this.fetch();
+        this.fetch();
     }
 
     async fetch() {
