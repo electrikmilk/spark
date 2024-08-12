@@ -15,7 +15,7 @@ export class RNG {
     }
 
     new() {
-        return this.value = maybe() ? randomInt(this.min, this.max) : randomInt(this.min, this.max);
+        return this.value = randomInt(this.min, this.max);
     }
 
     maybeNeg() {
@@ -30,7 +30,7 @@ export function maybe() {
     return randomInt(0, 1);
 }
 
-// Returns one of the random values given.
+// Returns a random value from the values given.
 export function randomValue(...values) {
     return values[randomInt(0, values.length)];
 }
