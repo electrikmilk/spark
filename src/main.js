@@ -1,5 +1,5 @@
 /*
- * Render framework.
+ * Spark library.
  */
 
 export * from './html.js';
