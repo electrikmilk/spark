@@ -7,17 +7,19 @@ export async function sleep(ms) {
     return await new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function hash(string) {
-    let hash = 0;
-    if (!string || string.length === 0) {
-        return hash;
-    }
-    for (let i = 0; i < string.length; i++) {
-        hash = ((hash << 5) - hash) + string.charCodeAt(i);
-        hash = hash & hash;
+export function equal(value1, value2) {
+    if (typeof value1 === typeof value2) {
+        if (Array.isArray(value1) && Array.isArray(value2)) {
+            return empty(arrayDiff(value1, value2));
+        }
+        if (typeof value1 === 'object') {
+            return deepCompare(value1, value2);
+        }
+
+        return value1 === value2;
     }
 
-    return Math.abs(hash);
+    return JSON.stringify(value1) === JSON.stringify(value2);
 }
 
 // Check if a value is actually empty. Returns true for 0 and false.
