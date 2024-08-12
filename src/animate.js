@@ -169,7 +169,7 @@ export const Animate = {
         ], duration);
     },
     async shrink(element, duration = 1000) {
-        return await this.element.animate(element, [
+        return await this.animate(element, [
             {
                 transform: 'scale(1)',
             },
