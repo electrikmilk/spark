@@ -14,6 +14,10 @@ export class Store {
         this.publish();
     }
 
+    get() {
+        return this.value;
+    }
+
     // Set new value.
     set(newValue) {
         this.value = newValue;
