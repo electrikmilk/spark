@@ -2,9 +2,9 @@
 Randomness
  */
 
-// Randomly mutate a number.
 import {Store} from './store.js';
 
+// Randomly mutate a number.
 export class RNG {
     value = 0;
     min = 0;
@@ -22,13 +22,16 @@ export class RNG {
     }
 }
 
-export class RandomStore extends RNG {
+export class RandomStore extends Store {
+    rng;
+
     constructor(init, min, max) {
-        super(new Store(init), min, max);
+        super(init);
+        this.rng = new RNG(init, min, max);
     }
 
     new() {
-        this.value.set(randomInt(this.min, this.max));
+        this.set(this.rng.new());
         return this.value;
     }
 }
