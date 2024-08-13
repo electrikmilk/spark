@@ -184,7 +184,7 @@ export class APIModel {
 // Store for JSON data from a single API endpoint. Use fetch() method to refresh data for subscribers.
 export class APIStore extends Store {
     url;
-    busy;
+    busy = new Store(false);
 
     constructor(url) {
         super();
@@ -193,8 +193,8 @@ export class APIStore extends Store {
     }
 
     async fetch() {
-        this.busy = true;
-        await fetch(this.url).then(res => res.json()).then(data => this.set(data)).catch(err => this.onError(err)).finally(() => this.busy = false);
+        this.busy.set(true);
+        await fetch(this.url).then(res => res.json()).then(data => this.set(data)).catch(err => this.onError(err)).finally(() => this.busy.set(false));
     }
 
     onError(err) {
@@ -205,7 +205,7 @@ export class APIStore extends Store {
 export class HTTPStore extends Store {
     url;
     request;
-    busy;
+    busy = new Store(false);
     errorHandler;
 
     constructor(method, url, options = {}) {
@@ -245,7 +245,7 @@ export class HTTPStore extends Store {
     }
 
     async fetch() {
-        this.busy = true;
+        this.busy.set(true);
         this.request.send(this.body);
         return await new Promise(resolve => {
             this.request.onload = () => {
@@ -266,7 +266,7 @@ export class HTTPStore extends Store {
             this.request.onerror = (err) => this.errorHandler(err, 'error');
             this.request.ontimeout = (err) => this.errorHandler(err, 'timeout');
             this.request.onabort = (err) => this.errorHandler(err, 'abort');
-        }).finally(() => this.busy = false);
+        }).finally(() => this.busy.set(false));
     }
 
     onProgress(handler) {
@@ -291,20 +291,18 @@ const defaultFetchableConfig = {
 };
 
 export class Fetchable {
+    busy = new Store(false);
     url;
     config;
+    response;
 
     constructor(url, config = {}) {
         this.url = url;
         this.config = {...defaultFetchableConfig, ...config};
     }
 
-    async get() {
-        return await fetch(this.url, this.config);
-    }
-
     async text() {
-        return await this.get().then(res => res.text());
+        return await this.get(res => res.text());
     }
 
     async json() {
@@ -316,18 +314,26 @@ export class Fetchable {
             this.config.headers = new Headers({'Accept': 'application/json'});
         }
 
-        return await this.get().then(res => res.json());
+        return await this.get(res => res.json());
     }
 
     async formData() {
-        return await this.get().then(res => res.formData());
+        return await this.get(res => res.formData());
     }
 
     async blob() {
-        return await this.get().then(res => res.blob());
+        return await this.get(res => res.blob());
     }
 
     async arrayBuffer() {
-        return await this.get().then(res => res.arrayBuffer());
+        return await this.get(res => res.arrayBuffer());
+    }
+
+    async get(returnTypeFn) {
+        this.busy.set(true);
+        return await fetch(this.url, this.config).then(res => {
+            this.response = res;
+            return returnTypeFn(res);
+        }).finally(() => this.busy.set(false));
     }
 }
