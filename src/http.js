@@ -187,7 +187,7 @@ export class APIStore extends Store {
     busy = new Store(false);
 
     constructor(url) {
-        super();
+        super({});
         this.url = url;
         this.fetch();
     }
