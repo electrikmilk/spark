@@ -37,7 +37,7 @@ export class Store {
     }
 
     // Add a value update handler.
-    subscribe(handler) {
+    model(handler) {
         handler(this.value);
         this.handlers.push(handler);
     }
@@ -70,14 +70,14 @@ export class Store {
                 break;
         }
 
-        this.subscribe((newValue) => {
+        this.model((newValue) => {
             modelFunction(element, newValue);
         }, false);
 
         return element;
     }
 
-    // Push new value to handlers.
+    // Publish new value to handlers.
     publish() {
         this.handlers.forEach(s => s(this.value));
     }
