@@ -196,7 +196,7 @@ export class APIStore extends Store {
 
     async fetch() {
         this.busy.set(true);
-        await fetch(this.url).then(res => res.json()).then(data => this.set(data)).catch(err => this.onError(err)).finally(() => this.busy.set(false));
+        await fetch(this.url).then(res => res.json()).then(data => this.set(data)).catch(this.onError).finally(() => this.busy.set(false));
     }
 
     onError(err) {
