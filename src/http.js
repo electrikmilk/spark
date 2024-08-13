@@ -247,7 +247,7 @@ export class HTTPStore extends Store {
     async fetch() {
         this.busy = true;
         this.request.send(this.body);
-        await new Promise(resolve => {
+        return await new Promise(resolve => {
             this.request.onload = () => {
                 if (this.request.status >= 200 && this.request.status < 400) {
                     let response = {
@@ -256,7 +256,8 @@ export class HTTPStore extends Store {
                         status: this.request.status,
                         statusText: this.request.statusText,
                     };
-                    resolve(response);
+                    this.set(response);
+                    resolve();
                 } else {
                     this.error();
                     throw new Error(this.request.response);
