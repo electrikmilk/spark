@@ -38,7 +38,7 @@ export class RandomStore extends Store {
 
 // Return a random boolean.
 export function maybe() {
-    return randomInt(0, 1);
+    return randomInt(0, 1) === 1;
 }
 
 // Returns a random value from the values given.
