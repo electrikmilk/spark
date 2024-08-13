@@ -3,6 +3,8 @@ Randomness
  */
 
 // Randomly mutate a number.
+import {Store} from './store.js';
+
 export class RNG {
     value = 0;
     min = 0;
@@ -17,6 +19,17 @@ export class RNG {
     // Returns a new random value.
     new() {
         return this.value = randomInt(this.min, this.max);
+    }
+}
+
+export class RandomStore extends RNG {
+    constructor(init, min, max) {
+        super(new Store(init), min, max);
+    }
+
+    new() {
+        this.value.set(randomInt(this.min, this.max));
+        return this.value;
     }
 }
 
