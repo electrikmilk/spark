@@ -47,38 +47,38 @@ export class Store {
     }
 
     // Subscribe an element to a store value automatically.
-    bind(element) {
-        let modelFunction = (element, newValue) => element.innerText = newValue;
+    bind(element, callback = null) {
+        let modelFunction;
+        if (callback) {
+            modelFunction = callback;
+        } else {
+            modelFunction = (element, newValue) => element.innerText = newValue;
+            const tag = tagName(element);
+            switch (tag) {
+                case 'input':
+                case 'select':
+                case 'textarea':
+                    const inputChange = (e) => this.set(e.target.value);
+                    element.addEventListener('change', inputChange);
+                    element.addEventListener('keyup', inputChange);
 
-        const tag = tagName(element);
-        switch (tag) {
-            case 'input':
-            case 'select':
-            case 'textarea':
-                const inputChange = (e) => this.set(e.target.value);
-                element.addEventListener('change', inputChange);
-                element.addEventListener('keyup', inputChange);
-
-                if (tag === 'input') {
-                    const type = element.getAttribute('type');
-                    if (type === 'checkbox' || type === 'radio') {
-                        modelFunction = checkboxModel;
-                        break;
+                    if (tag === 'input') {
+                        const type = element.getAttribute('type');
+                        if (type === 'checkbox' || type === 'radio') {
+                            modelFunction = checkboxModel;
+                            break;
+                        }
                     }
-                }
 
-                modelFunction = inputModel;
-                break;
-            case 'button':
-                modelFunction = buttonModel;
-                break;
+                    modelFunction = inputModel;
+                    break;
+                case 'button':
+                    modelFunction = buttonModel;
+                    break;
+            }
         }
 
-        this.model((newValue) => {
-            modelFunction(element, newValue);
-        }, false);
-
-        return element;
+        this.model((newValue) => modelFunction(element, newValue));
     }
 
     // Publish new value to handlers.
