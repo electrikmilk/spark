@@ -126,7 +126,7 @@ export class GoogleFontResource extends Resource {
     }
 }
 
-function createResourceTag(tag, attrs) {
+export function createResourceTag(tag, attrs) {
     const existing = getElement(tag, attrs);
     if (existing) {
         return existing;
