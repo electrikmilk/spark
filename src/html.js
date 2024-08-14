@@ -82,20 +82,19 @@ export function loadImage(imgElement, src) {
 
 // Fades an element between a callback.
 export async function refreshElement(element, callback) {
-    if (element.innerHTML !== '' && element.checkVisibility()) {
-        await Animation.blurOut(element);
+    if (element.checkVisibility()) {
+        await Animation.fadeOut(element);
     }
 
     await callback(element);
 
-    await Animation.focusIn(element);
+    await Animation.fadeIn(element);
 }
 
-// Transition element between states.
-async function transitionState(newValue, element, render) {
+// Transition element content between states. Do not use with user generated or variable HTML.
+export async function transitionState(element, newHTML) {
     await refreshElement(element, () => {
-        element.innerHTML = '';
-        element.append(render);
+        element.innerHTML = newHTML;
     });
 }
 
