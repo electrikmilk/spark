@@ -186,7 +186,7 @@ export const Animate = {
             {
                 transform: 'rotate(360deg)',
             },
-        ], duration);
+        ], duration, iterations);
     },
     async bounce(element, duration = 500, iterations = 1) {
         return await this.animate(element, [
