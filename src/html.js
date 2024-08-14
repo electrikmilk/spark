@@ -91,13 +91,6 @@ export async function refreshElement(element, callback) {
     await Animation.fadeIn(element);
 }
 
-// Transition element content between states. Do not use with user generated or variable HTML.
-export async function transitionState(element, newHTML) {
-    await refreshElement(element, () => {
-        element.innerHTML = newHTML;
-    });
-}
-
 // Unescape an HTML string into a DOM object. Strips script tags.
 export function unescapeHTML(html) {
     return element({innerHTML: sanitizeHTML(html)});
