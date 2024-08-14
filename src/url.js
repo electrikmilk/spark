@@ -22,6 +22,11 @@ export class LiveURLParams {
         this.push();
     }
 
+    append(key, value) {
+        this.url.searchParams.append(key, value);
+        this.push();
+    }
+
     update(key, handler) {
         this.set(key, handler(this.get(key)));
     }
