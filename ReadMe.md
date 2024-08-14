@@ -9,7 +9,6 @@ Spark is a minimal web library.
 
 - Randomness
 - Reactive stores for data, media queries, and data returned from HTTP requests like a JSON API
-- Canvas abstraction
 - Global references
 - Element rendering abstraction
 - Element animations
