@@ -63,8 +63,8 @@ export class APIStore extends Store {
     url;
     busy = new Store(false);
 
-    constructor(url = null) {
-        super({});
+    constructor(url = null, initialValue = {}) {
+        super(initialValue);
         if (url) {
             this.url = url;
         }
