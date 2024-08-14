@@ -6,60 +6,9 @@ import {empty} from './util.js';
 import {Store} from './store.js';
 
 const methods = ['get', 'post', 'put', 'patch', 'delete'];
-const defaultFetchableConfig = {
-    headers: new Headers(),
-};
-
-export class Fetchable {
-    busy = new Store(false);
-    url;
-    config;
-    response;
-
-    constructor(url, config = {}) {
-        this.url = url;
-        this.config = {...defaultFetchableConfig, ...config};
-    }
-
-    async text() {
-        return await this.get(res => res.text());
-    }
-
-    async json() {
-        if (this.config.hasOwnProperty('headers')) {
-            if (!this.config.headers.has('Accept') || this.config.headers.get('Accept') !== 'application/json') {
-                this.config.headers.set('Accept', 'application/json');
-            }
-        } else {
-            this.config.headers = new Headers({'Accept': 'application/json'});
-        }
-
-        return await this.get(res => res.json());
-    }
-
-    async formData() {
-        return await this.get(res => res.formData());
-    }
-
-    async blob() {
-        return await this.get(res => res.blob());
-    }
-
-    async arrayBuffer() {
-        return await this.get(res => res.arrayBuffer());
-    }
-
-    async get(returnTypeFn) {
-        this.busy.set(true);
-        return await fetch(this.url, this.config).then(res => {
-            this.response = res;
-            return returnTypeFn(res);
-        }).finally(() => this.busy.set(false));
-    }
-}
 
 // Store for JSON data from a single API endpoint. Use fetch() method to refresh data for subscribers.
-export class APIStore extends Store {
+export class FetchStore extends Store {
     url;
     busy = new Store(false);
 
