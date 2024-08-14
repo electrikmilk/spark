@@ -2,7 +2,7 @@
  * HTML & DOM functions.
  */
 
-import {Animate} from './animate.js';
+import {Animation} from './animation.js';
 
 const inputTypes = ['text', 'search', 'url', 'number', 'password', 'email', 'tel'];
 
@@ -83,12 +83,12 @@ export function loadImage(imgElement, src) {
 // Fades an element between a callback.
 export async function refreshElement(element, callback) {
     if (element.innerHTML !== '' && element.checkVisibility()) {
-        await Animate.blurOut(element);
+        await Animation.blurOut(element);
     }
 
     await callback(element);
 
-    await Animate.focusIn(element);
+    await Animation.focusIn(element);
 }
 
 // Transition element between states.

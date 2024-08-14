@@ -9,7 +9,7 @@ export * from './url.js';
 export * from './random.js';
 export * from './picasso.js';
 export * from './refs.js';
-export * from './animate.js';
+export * from './animation.js';
 export * from './style.js';
 export * from './http.js';
 export * from './util.js';
