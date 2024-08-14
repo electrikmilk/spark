@@ -5,6 +5,8 @@
 
 Spark is a minimal web library.
 
+[Wiki](https://github.com/electrikmilk/spark/wiki)
+
 ## Features
 
 - Randomness
