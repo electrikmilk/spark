@@ -26,8 +26,7 @@ export class Store {
 
     // Update value using handler. Sets value to value returned from handler.
     async update(handler) {
-        this.value = await handler(this.value);
-        this.publish();
+        this.set(await handler(this.value));
     }
 
     // Get the size of the value.

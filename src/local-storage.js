@@ -2,7 +2,8 @@
  * Local Storage API value handler that keeps the type of the value intact.
  */
 
-import {empty} from './util.js';
+import {empty, TRY} from './util.js';
+import {Store} from './store.js';
 
 export class LocalStorageValue {
     key;
@@ -26,17 +27,23 @@ export class LocalStorageValue {
             return null;
         }
 
-        const value = localStorage.getItem(this.key);
-        const json = isJSONString(value);
-        if (json !== false) {
-            return json.value;
+        let value = JSON.parse(localStorage.getItem(this.key));
+        let [json, err] = TRY(() => {
+            JSON.parse(value);
+        });
+        if (err === null) {
+            value = json;
+
+            if (value && value.hasOwnProperty('SPARK_VALUE')) {
+                return value.SPARK_VALUE;
+            }
         }
 
         return value;
     }
 
     set(newValue) {
-        return localStorage.setItem(this.key, JSON.stringify({value: newValue}));
+        return localStorage.setItem(this.key, JSON.stringify({'SPARK_VALUE': newValue}));
     }
 
     clear() {
@@ -64,5 +71,29 @@ export class LocalStorageValue {
 
     empty() {
         return empty(this.value());
+    }
+}
+
+export class LocalStorageStore extends Store {
+    localStorageValue;
+
+    constructor(key, defaultValue = null) {
+        const localStorageValue = new LocalStorageValue(key, defaultValue);
+        super(localStorageValue.get());
+        this.localStorageValue = localStorageValue;
+    }
+
+    set(newValue) {
+        this.localStorageValue.set(newValue);
+        super.set(newValue);
+    }
+
+    async update(handler) {
+        await super.update(handler);
+        this.localStorageValue.set(this.value);
+    }
+
+    get() {
+        return this.value = this.localStorageValue.get();
     }
 }
