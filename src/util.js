@@ -7,6 +7,14 @@ export async function sleep(ms) {
     return await new Promise(resolve => setTimeout(resolve, ms));
 }
 
+export function TRY(handler) {
+    try {
+        return [handler(), null];
+    } catch (e) {
+        return [null, e];
+    }
+}
+
 export function equal(value1, value2) {
     if (typeof value1 === typeof value2) {
         if (Array.isArray(value1) && Array.isArray(value2)) {
