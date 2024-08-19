@@ -93,7 +93,19 @@ export class LocalStorageStore extends Store {
         this.localStorageValue.set(this.value);
     }
 
-    get() {
-        return this.value = this.localStorageValue.get();
+    remove() {
+        return this.localStorageValue.remove();
+    }
+
+    clear() {
+        return this.localStorageValue.clear();
+    }
+
+    size() {
+        return this.localStorageValue.size();
+    }
+
+    empty() {
+        return this.localStorageValue.empty();
     }
 }
