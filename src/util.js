@@ -19,10 +19,10 @@ export function TRY(handler) {
 export function equal(value1, value2) {
     if (typeof value1 === typeof value2) {
         if (Array.isArray(value1) && Array.isArray(value2)) {
-            return value1.filter(i => !value2.includes(i) || !equal(value1[i], value2[i])).length !== 0;
+            return arrayCompare(value1, value2);
         }
         if (typeof value1 === 'object') {
-            return deepCompare(value1, value2);
+            return objCompare(value1, value2);
         }
 
         return value1 === value2;
@@ -51,8 +51,13 @@ export function arrayDiff(arr1, arr2) {
     return arr1.filter(i => !arr2.includes(i)).length !== 0;
 }
 
+// Deep compare two arrays.
+export function arrayCompare(array1, array2) {
+    return array1.filter(i => !array2.includes(i) || !equal(array1[i], array2[i])).length !== 0;
+}
+
 // Deep compare two objects.
-export function deepCompare(value1, value2) {
+export function objCompare(value1, value2) {
     if (typeof value1 === 'object' || typeof value2 === 'object') {
         if (Object.is(value1, {}) && Object.is(value2, {})) {
             return true;
