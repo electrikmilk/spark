@@ -7,6 +7,7 @@ export async function sleep(ms) {
     return await new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Try something within a handler and return error if it fails.
 export function TRY(handler) {
     try {
         return [handler(), null];
