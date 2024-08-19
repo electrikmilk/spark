@@ -27,7 +27,7 @@ export class LocalStorageValue {
             return null;
         }
 
-        let value = JSON.parse(localStorage.getItem(this.key));
+        let value = localStorage.getItem(this.key);
         let [json, err] = TRY(() => {
             JSON.parse(value);
         });
