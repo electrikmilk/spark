@@ -19,7 +19,7 @@ export function TRY(handler) {
 export function equal(value1, value2) {
     if (typeof value1 === typeof value2) {
         if (Array.isArray(value1) && Array.isArray(value2)) {
-            return empty(arrayDiff(value1, value2));
+            return value1.filter(i => !value2.includes(i) || !equal(value1[i], value2[i])).length !== 0;
         }
         if (typeof value1 === 'object') {
             return deepCompare(value1, value2);
