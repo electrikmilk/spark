@@ -1,4 +1,3 @@
-<br/>
 <img height="100" width="100" src="https://i.imgur.com/rTGqAIO.png" title="Spark" alt="SparkJS Lightning Bolt Logo"/>
 
 # Spark
