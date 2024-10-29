@@ -40,7 +40,7 @@ export class CustomElement extends HTMLElement {
         this.attributes[name].updated(oldValue, newValue);
     }
 
-    attribute(name) {
+    getAttribute(name) {
         if (this.hasAttribute(name)) {
             this.attributes[name].value = this.getAttribute(name);
             return this.attributes[name];
