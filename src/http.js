@@ -22,11 +22,11 @@ export class FetchStore extends Store {
 
     async fetch() {
         this.busy.set(true);
-        await fetch(this.url).then(res => res.json()).then(data => this.onFetch(data)).catch(this.onError).finally(() => this.busy.set(false));
+        await fetch(this.url).then(res => res.json()).then(data => this.set(this.onFetch(data))).catch(this.onError).finally(() => this.busy.set(false));
     }
 
     onFetch(data) {
-        this.set(data);
+        return data;
     }
 
     onError(err) {
