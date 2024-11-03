@@ -16,3 +16,4 @@ Spark is a minimal web library.
 - 3rd party resource management
 - Utility functions
 - Live URL params management
+- Custom elements abstraction
