@@ -11,7 +11,7 @@ export function element(...elements) {
     let tag = 'div';
     if (elements) {
         let config = {};
-        elements.forEach(e => !(e instanceof HTMLElement) ? config = {...config, ...e} : null);
+        elements.forEach(e => !(e instanceof HTMLElement) && !(e instanceof Text) ? config = {...config, ...e} : null);
         if (config) {
             if (config['tag']) {
                 tag = config['tag'];
