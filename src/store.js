@@ -3,7 +3,7 @@
  */
 
 import {tagName} from './html.js';
-import {empty} from './util.js';
+import {empty, sizeOf} from './util.js';
 
 export class Store {
     value = null;
@@ -31,7 +31,7 @@ export class Store {
 
     // Get the size of the value.
     size() {
-        return this.value.hasOwnProperty('length') ? this.value.length : 0;
+        return sizeOf(this.value);
     }
 
     // Check if value is empty.
