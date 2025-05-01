@@ -47,7 +47,7 @@ export class Cache {
         return empty(this.get());
     }
 
-    remove() {
+    forget() {
         localStorage.removeItem(this.key);
     }
 }
