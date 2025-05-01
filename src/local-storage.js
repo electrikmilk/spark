@@ -2,8 +2,55 @@
  * Local Storage API value handler that keeps the type of the value intact.
  */
 
-import {empty, TRY} from './util.js';
+import {empty, sizeOf, TRY} from './util.js';
 import {Store} from './store.js';
+
+const SPARK_VALUE = '_SPARK_VALUE';
+
+export class Cache {
+    key = null;
+    value = null;
+    setter = async () => {
+        //
+    };
+
+    constructor(key, setter) {
+        this.key = key;
+        this.setter = setter;
+    }
+
+    async get() {
+        const stored = localStorage.getItem(this.key);
+        if (stored) {
+            this.value = JSON.parse(stored);
+            if (typeof this.value === 'object' && this.value.hasOwnProperty(SPARK_VALUE)) {
+                this.value = this.value[SPARK_VALUE];
+            }
+            return this.value;
+        }
+
+        this.value = await this.setter();
+        let value = this.value;
+        if (typeof this.value !== 'object') {
+            value = {SPARK_VALUE: this.value};
+        }
+        localStorage.setItem(this.key, JSON.stringify(value));
+
+        return this.value;
+    }
+
+    size() {
+        return sizeOf(this.get());
+    }
+
+    empty() {
+        return empty(this.get());
+    }
+
+    remove() {
+        localStorage.removeItem(this.key);
+    }
+}
 
 export class LocalStorageValue {
     key;
@@ -43,7 +90,7 @@ export class LocalStorageValue {
     }
 
     set(newValue) {
-        return localStorage.setItem(this.key, JSON.stringify({'SPARK_VALUE': newValue}));
+        return localStorage.setItem(this.key, JSON.stringify({SPARK_VALUE: newValue}));
     }
 
     clear() {
