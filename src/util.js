@@ -31,6 +31,21 @@ export function equal(value1, value2) {
     return JSON.stringify(value1) === JSON.stringify(value2);
 }
 
+// Get the size of any value.
+export function sizeOf(value) {
+    const valueType = typeof value;
+    if (valueType === 'object') {
+        let len = 0;
+        value.entries().forEach(() => ++len);
+        return len;
+    }
+    if (valueType === 'string' || Array.isArray(value)) {
+        return value.length;
+    }
+
+    return value;
+}
+
 // Check if a value is actually empty. Returns true for 0 and false.
 export function empty(value) {
     if (value === undefined || typeof value === 'undefined' || value === null) {
