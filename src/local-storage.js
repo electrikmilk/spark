@@ -39,12 +39,12 @@ export class Cache {
         return this.value;
     }
 
-    size() {
-        return sizeOf(this.get());
+    async size() {
+        return sizeOf(await this.get());
     }
 
-    empty() {
-        return empty(this.get());
+    async empty() {
+        return empty(await this.get());
     }
 
     forget() {
