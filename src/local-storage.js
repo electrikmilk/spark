@@ -55,18 +55,7 @@ export class LocalStorageValue {
     }
 
     size() {
-        const value = this.value();
-        const valueType = typeof value;
-        if (valueType === 'object') {
-            let len = 0;
-            value.entries().forEach(() => ++len);
-            return len;
-        }
-        if (valueType === 'string' || Array.isArray(value)) {
-            return value.length;
-        }
-
-        return value;
+        return sizeOf(this.value());
     }
 
     empty() {
