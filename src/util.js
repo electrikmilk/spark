@@ -35,15 +35,23 @@ export function equal(value1, value2) {
 export function sizeOf(value) {
     const valueType = typeof value;
     if (valueType === 'object') {
-        let len = 0;
-        value.entries().forEach(() => ++len);
-        return len;
+        return objSize(value);
     }
     if (valueType === 'string' || Array.isArray(value)) {
         return value.length;
     }
 
     return value;
+}
+
+function objSize(obj) {
+    let len = Object.keys(obj).length;
+    for (const key in obj) {
+        if (typeof obj[key] === 'object') {
+            len += objSize(obj[key]);
+        }
+    }
+    return len;
 }
 
 // Check if a value is actually empty. Returns true for 0 and false.
