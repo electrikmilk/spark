@@ -42,7 +42,6 @@ export class CustomElement extends HTMLElement {
 
     getAttribute(name) {
         if (this.hasAttribute(name)) {
-            this.attributes[name].value = this.getAttribute(name);
             return this.attributes[name];
         }
 
