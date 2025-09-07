@@ -129,23 +129,18 @@ export function unescapeHTML(html) {
 
 const scriptTagsRegex = new RegExp(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi);
 
-export function sanitizeHTML(html) {
+export async function sanitizeHTML(html) {
     if (!scriptTagsRegex.test(html)) {
         return html;
     }
 
-    tempElement((temp) => {
-        temp.innerHTML = html.replace(scriptTagsRegex, '');
+    const temp = createElement({innerHTML: html.replace(scriptTagsRegex, '')});
+    const scriptTags = temp.getElementsByTagName('script');
+    for (const tag of scriptTags) {
+        tag.remove();
+    }
 
-        const scriptTags = temp.getElementsByTagName('script');
-        for (const tag of scriptTags) {
-            tag.remove();
-        }
-
-        html = temp.innerHTML;
-    });
-
-    return html;
+    return temp.innerHTML;
 }
 
 export function tagName(element) {
