@@ -135,7 +135,7 @@ export const Animation = {
         ], duration);
     },
     async fadeOutLeft(element, duration = 1000) {
-        return await this.element.animate([
+        return await this.createElement.animate([
             {
                 opacity: '100%',
                 transform: 'translateX(0)',

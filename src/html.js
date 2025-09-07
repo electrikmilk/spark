@@ -6,8 +6,19 @@ import {Animation} from './animation.js';
 
 const inputTypes = ['text', 'search', 'url', 'number', 'password', 'email', 'tel'];
 
-// Create tree of HTML elements.
-export function element(...elements) {
+/**
+ * Create element with configuration containing elements.
+ * Configurations contain either element attributes or properties.
+ * These can be in any order.
+ *
+ * ```
+ * createElement({tag: 'div'})
+ * createElement(createElement({tag: 'div', class}), {tag: 'div'})
+ * ```
+ *
+ * @param elements
+ */
+export function createElement(...elements) {
     let tag = 'div';
     if (elements) {
         let config = {};
@@ -26,13 +37,19 @@ export function element(...elements) {
 }
 
 // Create HTML tag.
-export function html(tag, config, ...elements) {
+function html(tag, config, ...elements) {
     const element = document.createElement(tag);
     if (elements) {
         element.append(...elements);
     }
     for (let key in config) {
         if (key in element) {
+            if (key === 'style' && typeof config[key] === 'object') {
+                for (let key in config['style']) {
+                    element.style[key] = config['style'][key];
+                }
+                continue;
+            }
             element[key] = config[key];
         } else {
             applyAttribute(element, key, config[key]);
@@ -40,6 +57,20 @@ export function html(tag, config, ...elements) {
     }
 
     return element;
+}
+
+// Create a temporary hidden element in the document body, then removes it once the callback finishes.
+export async function tempElement(callback, tagName = 'div') {
+    const temp = createElement({
+        style: {
+            display: 'none',
+        },
+    });
+
+    document.body.append(temp);
+
+    await callback(temp);
+    temp.remove();
 }
 
 // Applies an attribute to an element. Toggles attribute if value is a boolean.
@@ -60,7 +91,7 @@ export function text(text) {
 const SINGLE_PIXEL_PNG_BASE64 = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
 
 export function lazyImage(src, attrs = {}) {
-    const e = element({
+    const e = createElement({
         tag: 'img',
         src: SINGLE_PIXEL_PNG_BASE64,
         ...attrs,
@@ -93,7 +124,7 @@ export async function refreshElement(element, callback) {
 
 // Unescape an HTML string into a DOM object. Strips script tags.
 export function unescapeHTML(html) {
-    return element({innerHTML: sanitizeHTML(html)});
+    return createElement({innerHTML: sanitizeHTML(html)});
 }
 
 const scriptTagsRegex = new RegExp(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi);
@@ -103,14 +134,18 @@ export function sanitizeHTML(html) {
         return html;
     }
 
-    const temp = document.createElement('div');
-    temp.innerHTML = html.replace(scriptTagsRegex, '');
-    const scriptTags = temp.getElementsByTagName('script');
-    for (const tag of scriptTags) {
-        tag.remove();
-    }
+    tempElement((temp) => {
+        temp.innerHTML = html.replace(scriptTagsRegex, '');
 
-    return temp.innerHTML;
+        const scriptTags = temp.getElementsByTagName('script');
+        for (const tag of scriptTags) {
+            tag.remove();
+        }
+
+        html = temp.innerHTML;
+    });
+
+    return html;
 }
 
 export function tagName(element) {

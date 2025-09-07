@@ -4,15 +4,16 @@
 
 // Style an element with an object.
 
-import {getSelector} from './html.js';
+import {createElement, getSelector} from './html.js';
 import {Store} from './store.js';
 
 // Push document style.
 export function pushCSS(rules) {
     if (!styleTag) {
-        styleTag = document.createElement('style');
-        styleTag.type = 'text/css';
-        document.head.append(styleTag);
+        document.head.append(createElement({
+            tag: 'style',
+            type: 'text/css',
+        }));
     }
     if (styleRules.indexOf(rules) === -1) {
         styleRules.push(rules);

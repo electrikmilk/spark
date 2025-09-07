@@ -2,7 +2,7 @@
  * 3rd party script and styling management.
  */
 
-import {element} from './html.js';
+import {createElement} from './html.js';
 
 const head = document.getElementsByTagName('head')[0];
 
@@ -132,7 +132,7 @@ export function createResourceTag(tag, attrs) {
         return existing;
     }
 
-    const e = element({tag: tag, ...attrs});
+    const e = createElement({tag: tag, ...attrs});
     head.appendChild(e);
 
     return e;
