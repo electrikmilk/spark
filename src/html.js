@@ -129,7 +129,7 @@ export function unescapeHTML(html) {
 
 const scriptTagsRegex = new RegExp(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi);
 
-export async function sanitizeHTML(html) {
+export function sanitizeHTML(html) {
     if (!scriptTagsRegex.test(html)) {
         return html;
     }
