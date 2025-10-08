@@ -6,6 +6,10 @@
 
 Spark is a minimal web library.
 
+```
+npm i @electrikmilk/spark
+```
+
 [Wiki](https://github.com/electrikmilk/spark/wiki)
 
 ## Features
