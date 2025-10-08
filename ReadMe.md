@@ -2,6 +2,8 @@
 
 # Spark
 
+[![Node.js Package](https://github.com/electrikmilk/spark/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/electrikmilk/spark/actions/workflows/npm-publish.yml)
+
 Spark is a minimal web library.
 
 [Wiki](https://github.com/electrikmilk/spark/wiki)
