@@ -1,6 +1,5 @@
 {
-  "name": "spark",
-  "private": true,
+  "name": "@electrikmilk/spark",
   "version": "0.0.1",
   "type": "module",
   "scripts": {
@@ -14,5 +13,43 @@
   ],
   "devDependencies": {
     "vite": "^5.3.1"
-  }
+  },
+  "description": "Minimal Web Library",
+  "dependencies": {
+    "esbuild": "^0.21.5",
+    "fsevents": "^2.3.3",
+    "nanoid": "^3.3.7",
+    "picocolors": "^1.0.1",
+    "postcss": "^8.4.38",
+    "rollup": "^4.18.0",
+    "source-map-js": "^1.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electrikmilk/spark.git"
+  },
+  "keywords": [
+    "spark",
+    "library",
+    "web",
+    "http",
+    "ref",
+    "animation",
+    "resource",
+    "management",
+    "dom",
+    "storage",
+    "random",
+    "reactivity",
+    "styling",
+    "html",
+    "custom",
+    "elements"
+  ],
+  "author": "electrikmilk",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/electrikmilk/spark/issues"
+  },
+  "homepage": "https://github.com/electrikmilk/spark#readme"
 }
