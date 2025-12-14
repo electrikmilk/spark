@@ -10,7 +10,7 @@ npm i @electrikmilk/spark
 
 ## Features
 
-- Randomness
+- Easy, optionally reactive randomness
 - Reactive stores for data, media queries, and data returned from HTTP requests like a JSON API
 - Global references
 - Element rendering abstraction
