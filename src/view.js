@@ -28,7 +28,12 @@ export class ViewController {
         }
 
         // Give images a sec to load in, etc.
-        await Animation.fadeIn(renderedView);
+        await new Promise(resolve => {
+            setTimeout(async () => {
+                await Animation.fadeIn(renderedView);
+                resolve();
+            }, 500);
+        });
     }
 
     async clear() {
