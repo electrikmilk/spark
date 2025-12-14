@@ -8,8 +8,6 @@ Spark is a minimal web library.
 npm i @electrikmilk/spark
 ```
 
-[Wiki](https://github.com/electrikmilk/spark/wiki)
-
 ## Features
 
 - Randomness
@@ -21,3 +19,6 @@ npm i @electrikmilk/spark
 - Utility functions
 - Live URL params management
 - Custom elements abstraction
+- and more...
+
+[Learn more on the Wiki](https://github.com/electrikmilk/spark/wiki)
