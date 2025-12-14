@@ -1,5 +1,5 @@
 /*
- * CSS animation.
+ * CSS animation abstraction.
  */
 
 import {nextFrame, sleep} from './util.js';
