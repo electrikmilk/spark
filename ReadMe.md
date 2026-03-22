@@ -2,7 +2,7 @@
 
 # Spark
 
-Spark is a minimal web library.
+Spark is a web framework.
 
 ```
 npm i @electrikmilk/spark
